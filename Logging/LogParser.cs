@@ -30,10 +30,11 @@ namespace DiagonalUI.Logging
 
         public void ProcessLine(string line)
         {
-            var index = line.IndexOf("/* log:tag:" + _tag + " */");
+            var tagComment = "/* log:tag:" + _tag + " */";
+            var index = line.IndexOf(tagComment);
             if (index != -1)
             {
-                var messageData = line.Substring(index, line.Length - 1);
+                var messageData = line.Substring(index + tagComment.Length);
                 var deserialized = JsonSerializer.Deserialize<Line>(messageData);
                 if(deserialized != null && _handlers.ContainsKey(deserialized.Message))
                 {

@@ -8,6 +8,40 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
+        <StackPanel Orientation="Vertical" Margin="0 0 50 0">
+            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="Tests"></TextBlock>
+            <ListView x:Name="TestList" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <SymbolIcon Visibility="{Binding ShowSuccess}" Symbol="Accept" Foreground="Green"></SymbolIcon>
+                            <SymbolIcon Visibility="{Binding ShowFailure}" Symbol="Cancel" Foreground="Red"></SymbolIcon>
+                            <ProgressRing IsActive="{Binding IsRunning}" Visibility="{Binding ShowProgress}" Width="5" Height="5" Margin="3"></ProgressRing>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="MinHeight" Value="0"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Button Click="Button_Click" Content="Start Test"></Button>
+        </StackPanel>
+        <ListView x:Name="Output" SelectionMode="None" Padding="5" Background="Black" Height="300" CornerRadius="10" MinWidth="300">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="Black">
+                        <TextBlock Text="{Binding}" FontFamily="Cascadia Mono" FontSize="12" Foreground="White"/>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinHeight" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </StackPanel>
 </Window>
