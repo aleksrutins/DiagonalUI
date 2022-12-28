@@ -13,11 +13,11 @@
             <ListView x:Name="TestList" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <SymbolIcon Visibility="{Binding ShowSuccess}" Symbol="Accept" Foreground="Green"></SymbolIcon>
-                            <SymbolIcon Visibility="{Binding ShowFailure}" Symbol="Cancel" Foreground="Red"></SymbolIcon>
-                            <ProgressRing IsActive="{Binding IsRunning}" Visibility="{Binding ShowProgress}" Width="5" Height="5" Margin="3"></ProgressRing>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <SymbolIcon Visibility="{Binding ShowSuccess}" Symbol="Accept" Foreground="Green" Margin="7"></SymbolIcon>
+                            <SymbolIcon Visibility="{Binding ShowFailure}" Symbol="Cancel" Foreground="Red" Margin="7"></SymbolIcon>
+                            <ProgressRing IsActive="{Binding IsRunning}" Visibility="{Binding ShowProgress}" Margin="5"></ProgressRing>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
