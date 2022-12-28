@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DiagonalUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DiagonalUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
