@@ -27,7 +27,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Button Click="Button_Click" Content="Start Test"></Button>
+            <Button x:Name="LogcatButton" Click="LogcatButton_Click" Content="Start Test"></Button>
         </StackPanel>
         <ListView x:Name="Output" SelectionMode="None" Padding="5" Background="Black" Height="300" CornerRadius="10" MinWidth="300">
             <ListView.ItemTemplate>

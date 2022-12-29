@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Text.Json;
+using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -101,18 +102,9 @@ namespace DiagonalUI
                 tests.Insert(index, test);
                 outputLines.Add("** TEST FINISHED: " + name + " | STATUS: " + (success ? "Success" : "Failure") + " **");
             });
-            logParser.ProcessLine(CreateLine("enumerateTest", "\"hello\""));
-            logParser.ProcessLine(CreateLine("enumerateTest", "\"world\""));
         }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void LogcatButton_Click(object sender, RoutedEventArgs e)
         {
-            logParser.ProcessLine(CreateLine("testStart", "\"hello\""));
-            await Task.Delay(1000);
-            logParser.ProcessLine(CreateLine("statusReport", "{\"name\": \"hello\", \"success\": true}"));
-            logParser.ProcessLine(CreateLine("testStart", "\"world\""));
-            await Task.Delay(1000);
-            logParser.ProcessLine(CreateLine("statusReport", "{\"name\": \"world\", \"success\": false}"));
         }
     }
 }
