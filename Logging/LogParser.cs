@@ -30,6 +30,7 @@ namespace DiagonalUI.Logging
 
         public void ProcessLine(string line)
         {
+            if (line == null) return;
             var tagComment = "/* log:tag:" + _tag + " */";
             var index = line.IndexOf(tagComment);
             if (index != -1)

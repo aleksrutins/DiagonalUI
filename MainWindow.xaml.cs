@@ -21,6 +21,9 @@ using Windows.Foundation.Collections;
 using DiagonalUI.Logging;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using System.Runtime.CompilerServices;
+using Microsoft.UI.Dispatching;
 
 namespace DiagonalUI
 {
@@ -49,29 +52,34 @@ namespace DiagonalUI
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        readonly LogParser logParser = new("diagonal");
-        readonly ObservableCollection<string> outputLines = new();
-        readonly ObservableCollection<Test> tests = new();
+        readonly LogParser LogParser = new("diagonal");
+        readonly ObservableCollection<string> OutputLines = new();
+        readonly ObservableCollection<Test> Tests = new();
+        readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         string CreateLine(string message, string data)
         {
             return $"/* log:tag:diagonal */ {{\"Message\": \"{message}\", \"Data\": {data}}}";
         }
+        void RunAsync(DispatcherQueueHandler cb)
+        {
+            dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, cb);
+        }
         public MainWindow()
         {
             this.InitializeComponent();
-            Output.ItemsSource = outputLines;
-            TestList.ItemsSource = tests;
-            logParser.AddHandler("logLine", text =>
+            Output.ItemsSource = OutputLines;
+            TestList.ItemsSource = Tests;
+            LogParser.AddHandler("logLine", text =>
             {
-                outputLines.Add(text.ToString());
+                OutputLines.Add(text.ToString());
             });
-            logParser.AddHandler("clearTests", _ =>
+            LogParser.AddHandler("clearTests", _ =>
             {
-                tests.Clear();
+                Tests.Clear();
             });
-            logParser.AddHandler("enumerateTest", name =>
+            LogParser.AddHandler("enumerateTest", name =>
             {
-                tests.Add(new Test
+                Tests.Add(new Test
                 {
                     Name = name.ToString(),
                     IsRunning = false,
@@ -79,32 +87,54 @@ namespace DiagonalUI
                     Success = false
                 });
             });
-            logParser.AddHandler("testStart", name =>
+            LogParser.AddHandler("testStart", name =>
             {
-                var test = tests.Where(t => t.Name == name.ToString()).First();
-                var index = tests.IndexOf(test);
-                tests.Remove(test);
+                var test = Tests.Where(t => t.Name == name.ToString()).First();
+                var index = Tests.IndexOf(test);
+                Tests.Remove(test);
                 test.IsRunning = true;
-                tests.Insert(index, test);
-                outputLines.Add("** TEST START: " + name.ToString() + " **");
+                Tests.Insert(index, test);
+                OutputLines.Add("** TEST START: " + name.ToString() + " **");
             });
-            logParser.AddHandler("statusReport", data =>
+            LogParser.AddHandler("statusReport", data =>
             {
                 var el = (JsonElement)data;
                 var name = el.GetProperty("name").ToString();
                 var success = el.GetProperty("success").GetBoolean();
-                var test = tests.Where(t => t.Name == name.ToString()).First();
-                var index = tests.IndexOf(test);
-                tests.Remove(test);
+                var test = Tests.Where(t => t.Name == name.ToString()).First();
+                var index = Tests.IndexOf(test);
+                Tests.Remove(test);
                 test.IsRunning = false;
                 test.HasRun = true;
                 test.Success = success;
-                tests.Insert(index, test);
-                outputLines.Add("** TEST FINISHED: " + name + " | STATUS: " + (success ? "Success" : "Failure") + " **");
+                Tests.Insert(index, test);
+                OutputLines.Add("** TEST FINISHED: " + name + " | STATUS: " + (success ? "Success" : "Failure") + " **");
             });
         }
         private void LogcatButton_Click(object sender, RoutedEventArgs e)
         {
+            var startInfo = new ProcessStartInfo
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                FileName = AdbPath.Text,
+                Arguments = "logcat",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+            var proc = new Process { StartInfo = startInfo };
+            proc.OutputDataReceived += ProcessLogcatLine;
+            proc.ErrorDataReceived += ProcessLogcatLine;
+            proc.Start();
+            proc.BeginOutputReadLine();
+            proc.BeginErrorReadLine();
+            LogcatButton.Visibility = Visibility.Collapsed;
+            AdbPath.Visibility = Visibility.Collapsed;
+        }
+
+        private void ProcessLogcatLine(object sender, DataReceivedEventArgs e)
+        {
+            RunAsync(() => LogParser.ProcessLine(e.Data));
         }
     }
 }

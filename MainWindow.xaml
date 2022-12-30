@@ -10,7 +10,9 @@
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Vertical" Margin="0 0 50 0">
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="Tests"></TextBlock>
-            <ListView x:Name="TestList" SelectionMode="None">
+            <TextBox x:Name="AdbPath" PlaceholderText="Path to adb.exe" HorizontalAlignment="Stretch"></TextBox>
+            <Button x:Name="LogcatButton" Click="LogcatButton_Click" Content="Start Logcat" HorizontalAlignment="Stretch"></Button>
+            <ListView x:Name="TestList" SelectionMode="None" ItemsSource="{Binding Tests}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -27,9 +29,8 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Button x:Name="LogcatButton" Click="LogcatButton_Click" Content="Start Test"></Button>
         </StackPanel>
-        <ListView x:Name="Output" SelectionMode="None" Padding="5" Background="Black" Height="300" CornerRadius="10" MinWidth="300">
+        <ListView x:Name="Output" SelectionMode="None" Padding="5" Background="Black" MinHeight="300" CornerRadius="10" MinWidth="300" ItemsSource="{Binding OutputLines}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="Black">
