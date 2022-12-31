@@ -19,10 +19,9 @@
             <Font name="System Bold" size="24.0" />
          </font></Label>
         <VBox alignment="TOP_CENTER" spacing="5.0">
-         <children>
             <TextField fx:id="adbPath" promptText="ADB Path" />
-            <Button fx:id="startLogcatButton" alignment="CENTER" mnemonicParsing="false" text="Start Logcat" />
-         </children></VBox>
+            <Button fx:id="startLogcatButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLogcatButtonClick" text="Start Logcat" />
+        </VBox>
       <ListView fx:id="testList" prefHeight="200.0" prefWidth="100.0" />
     </VBox>
    <TextArea fx:id="outputLines" editable="false" prefHeight="200.0" prefWidth="200.0">
