@@ -67,6 +67,7 @@ namespace DiagonalUI
         public MainWindow()
         {
             this.InitializeComponent();
+            Title = "Diagonal";
             Output.ItemsSource = OutputLines;
             TestList.ItemsSource = Tests;
             LogParser.AddHandler("logLine", text =>
