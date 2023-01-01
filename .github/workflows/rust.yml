@@ -30,7 +30,7 @@ jobs:
         name: diagonal-ui
         # A file, directory or wildcard pattern that describes what to upload
         path: target/release/diagonal-ui
-      if: ${{ runner.os == "Windows" }}
+      if: ${{ runner.os == 'Linux' }}
     - name: Upload artifact (Windows)
       uses: actions/upload-artifact@v3.1.1
       with:
@@ -38,4 +38,4 @@ jobs:
         name: diagonal-ui.exe
         # A file, directory or wildcard pattern that describes what to upload
         path: target/release/diagonal-ui.exe
-      if: ${{ runner.os == "Windows" }}
+      if: ${{ runner.os == 'Windows' }}
