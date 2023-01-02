@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Diagonal</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tests</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="adbPath">
+        <property name="placeholderText">
+         <string>ADB Path</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="logcatButton">
+        <property name="text">
+         <string>Start Logcat</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QListView" name="outputLines"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>logcatButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>logcatButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>575</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>logcatButtonClicked()</slot>
+ </slots>
+</ui>
