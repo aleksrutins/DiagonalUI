@@ -24,7 +24,6 @@ jobs:
   # uses: jurplel/install-qt-action@43ec12788e42f375acfcb2cec059edfb9572fbaa
       uses: jurplel/install-qt-action@v3.0.0
       with:
-        dir: C:\Qt
         version: 6.4.1
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -41,14 +40,14 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
     - name: Create deployment directory
-      run: mkdir C:\AppDeploy
+      run: mkdir ${{github.workspace}}\AppDeploy
     - name: Copy files
-      working-directory: C:\AppDeploy
+      working-directory: ${{github.workspace}}\AppDeploy
       run: |
         cp ${{github.workspace}}/build/Release/diagonal-ui.exe .
-        cp C:\Qt\Qt\6.4.1\mingw_64\bin\*.dll .
+        cp ${{env.RUNNER_WORKSPACE}}\Qt\6.4.1\mingw_64\bin\*.dll .
     - name: Create zipfile
-      working-directory: C:\
+      working-directory: ${{github.workspace}}
       run: tar -a -c -f diagonal-ui.zip AppDeploy/*
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.1
@@ -56,5 +55,5 @@ jobs:
         # Artifact name
         name: diagonal-ui.zip
         # A file, directory or wildcard pattern that describes what to upload
-        path: C:\diagonal-ui.zip
+        path: ${{github.workspace}}\diagonal-ui.zip
 
