@@ -4,6 +4,8 @@
 #include "logparser.h"
 #include "testdisplay.h"
 #include <QMainWindow>
+#include <QProcess>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,10 +21,13 @@ public:
 
 private slots:
     void logcatButtonClicked();
+    void processOutputReady();
+    void processErrorReady();
 
 private:
     Ui::MainWindow *ui;
     DiagonalUI::LogParser logParser;
     QList<DiagonalUI::TestDisplay*> tests;
+    QScopedPointer<QProcess> proc;
 };
 #endif // MAINWINDOW_H

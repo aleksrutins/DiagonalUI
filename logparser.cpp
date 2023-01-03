@@ -3,6 +3,7 @@
 #include <QJsonArray>
 #include <QStringRef>
 #include "logparser.h"
+using namespace std;
 
 namespace DiagonalUI {
 
@@ -17,9 +18,10 @@ void LogParser::processMessage(QString message) {
     index = index + tagComment.length(); // find actual start of JSON
     auto jsonStr = QStringRef(&message, index, (message.length() - index));
     QJsonObject jsonObj = QJsonDocument::fromJson(jsonStr.toUtf8()).object();
-    if(jsonObj["message"].isString() && this->handlers.contains(jsonObj["message"].toString())) {
-        auto handler = this->handlers[jsonObj["message"].toString()];
-        handler(jsonObj["data"]);
+    auto messageName = jsonObj["Message"].toString();
+    if(jsonObj["Message"].isString() && this->handlers.contains(jsonObj["Message"].toString())) {
+        auto handler = this->handlers[jsonObj["Message"].toString()];
+        handler(jsonObj["Data"]);
     }
 }
 

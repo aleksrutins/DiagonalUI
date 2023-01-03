@@ -52,7 +52,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="testList">
+       <widget class="QScrollArea" name="testList_scroll">
         <property name="widgetResizable">
          <bool>false</bool>
         </property>
@@ -65,6 +65,11 @@
            <height>441</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="testList"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
