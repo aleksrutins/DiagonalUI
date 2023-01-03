@@ -22,6 +22,7 @@
         <property name="font">
          <font>
           <pointsize>14</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -63,11 +64,10 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections>
