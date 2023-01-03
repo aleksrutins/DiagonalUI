@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "logparser.h"
+#include "testdisplay.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -20,5 +22,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    DiagonalUI::LogParser logParser;
+    QList<DiagonalUI::TestDisplay*> tests;
 };
 #endif // MAINWINDOW_H
