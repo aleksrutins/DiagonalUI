@@ -46,7 +46,7 @@ jobs:
       working-directory: ${{github.workspace}}\AppDeploy
       run: |
         cp ${{github.workspace}}/build/Release/diagonal-ui.exe .
-        cp $Qt6_DIR\bin\*.dll .
+        cp ${{ env.Qt6_DIR }}\bin\*.dll .
     - name: Create zipfile
       working-directory: ${{github.workspace}}
       run: tar -a -c -f diagonal-ui.zip AppDeploy/*
