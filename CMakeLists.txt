@@ -16,7 +16,6 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp mainwindow.h mainwindow.ui
         logparser.h logparser.cpp
-        testlistmodel.h testlistmodel.cpp
         test.h test.cpp
         testdisplay.h testdisplay.cpp
 )
