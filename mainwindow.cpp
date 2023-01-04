@@ -3,6 +3,7 @@
 
 #include <QJsonObject>
 #include <QtConcurrent/QtConcurrent>
+#include <QtGlobal>
 #include <iostream>
 
 using namespace DiagonalUI;
@@ -16,6 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     , proc(new QProcess(this))
 {
     ui->setupUi(this);
+
+
+    auto sdkPath = qEnvironmentVariable("ANDROID_SDK_ROOT");
+    if(!sdkPath.isEmpty()) {
+#ifdef __WIN32
+        ui->adbPath->setText(sdkPath + "\\platform-tools\\adb.exe");
+#else
+        ui->adbPath->setText(sdkPath + "/platform-tools/adb");
+#endif
+    }
 
     ui->testList->setAlignment(Qt::AlignTop);
 
